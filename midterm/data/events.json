@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "title": "Baku Marathon",
+    "date": "2026-05-04",
+    "location": "Baku, Azerbaijan",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "baku"
+  },
+  {
+    "id": 2,
+    "title": "Bishkek Marathon",
+    "date": "2026-09-21",
+    "location": "Bishkek, Kyrgyzstan",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "bishkek"
+  },
+  {
+    "id": 3,
+    "title": "Almaty Marathon",
+    "date": "2026-09-28",
+    "location": "Алматы, площадь Республики",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "almaty"
+  },
+  {
+    "id": 4,
+    "title": "Turkistan Marathon",
+    "date": "2025-10-26",
+    "location": "Turkistan, Kazakhstan",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "turkistan"
+  },
+  {
+    "id": 5,
+    "title": "Samarkand Marathon",
+    "date": "2025-11-09",
+    "location": "Samarkand, Uzbekistan",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "samarkand"
+  }
+]
+
+
