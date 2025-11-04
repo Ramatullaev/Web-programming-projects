@@ -6,5 +6,53 @@
         "password": "$2y$12$DSwm0LzY2loufT47rW72aODpvdAKmSZLQMW6ykezJZL0WZ9K604eG",
         "phone": "+77772302369",
         "created_at": "2025-10-19 09:02:18"
+    },
+    {
+        "id": 2,
+        "name": "Jackie Chan",
+        "email": "jackie_chan@gmail.com",
+        "password": "$2y$12$qEtFn8UnC2afcFxljdFjle.l\/TRnLm0Q2qSdXXmI\/nKag0Cpw67Ha",
+        "phone": "+77777777777",
+        "created_at": "2025-10-21 05:18:29"
+    },
+    {
+        "id": 3,
+        "name": "Nurali Yerkin",
+        "email": "nurali_yerkin@gmail.com",
+        "password": "$2y$12$DchPYJwfkgP0G9rlxJ9.Q.coawVB1JWZhwfRqqmliRYNybGBNxWma",
+        "phone": "+77777777777",
+        "created_at": "2025-10-21 05:19:51"
+    },
+    {
+        "id": 4,
+        "name": "I Show Speed",
+        "email": "ishowspeed@gmail.com",
+        "password": "$2y$12$h9x3C07w2Mtujh2.IbSe0.UtZIyxBp1TvrwuyXsy75Cql6g21Dckm",
+        "phone": "3023390496",
+        "created_at": "2025-10-21 05:20:46"
+    },
+    {
+        "id": 5,
+        "name": "Brad Pitt",
+        "email": "brad_pitt@gmail.com",
+        "password": "$2y$12$U8zelKD2e3dKmKRxBsbJ6eudJZ8hhCSr.bydKcopfEyAasLpK9tB6",
+        "phone": "3023390496",
+        "created_at": "2025-10-21 05:21:50"
+    },
+    {
+        "id": 6,
+        "name": "Max Verstappen",
+        "email": "max_verstappen@gmail.com",
+        "password": "$2y$12$RBdRsPmMDOtvAJEY8EYyMepxSAKGN\/Cd6546n1ZvTLykbGkIASEjm",
+        "phone": "3023390496",
+        "created_at": "2025-10-21 05:22:48"
+    },
+    {
+        "id": 7,
+        "name": "Aitgul Zhumakan",
+        "email": "aitgul_zhumakan@gmail.com",
+        "password": "$2y$12$I4geTMQSWjSOw1vS2tCecOPT84UWlXY1fKT9rziv6\/omqDiwmKgAi",
+        "phone": "3023390496",
+        "created_at": "2025-10-21 05:24:25"
     }
 ]

@@ -48,7 +48,7 @@
     </div>
 </section>
 
-<!-- 🕒 New Countdown Section -->
+
 <section class="section">
   <div class="container">
     <h2>Next race in Turkistan in:</h2>
@@ -88,7 +88,7 @@
       tick();
       const interval = setInterval(tick, 1000);
 
-      // Parallax effect (keep existing)
+
       window.addEventListener('scroll', ()=>{
         const y = window.scrollY * 0.3; 
         const el = document.querySelector('#hero .parallax'); 
@@ -97,7 +97,7 @@
     })();
   </script>
 </section>
-<!-- End Countdown Section -->
+
 
 <section class="section">
   <div class="container">
