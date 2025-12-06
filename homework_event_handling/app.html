@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Balloon</title>
+    <style>
+        body {
+            font-size: 20px;
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #balloon {
+            font-size: 40px;
+            transition: font-size 0.1s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p id="balloon">🎈</p>
+
+    <script>
+        let balloon = document.getElementById("balloon");
+
+        let size = 40; // initial font size in px
+        const maxSize = 120; // explosion threshold
+
+        function updateSize() {
+            balloon.style.fontSize = size + "px";
+        }
+
+        function handleKey(event) {
+            if (event.key === "ArrowUp") {
+                size *= 1.10; // grow by 10%
+                event.preventDefault();
+            }
+            else if (event.key === "ArrowDown") {
+                size *= 0.90; // shrink by 10%
+                event.preventDefault();
+            } else {
+                return; // ignore other keys
+            }
+
+            // explosion condition
+            if (size > maxSize) {
+                balloon.textContent = "💥";
+                document.removeEventListener("keydown", handleKey);
+                return;
+            }
+
+            updateSize();
+        }
+
+        // Set initial size
+        updateSize();
+
+        // Listen for keyboard events
+        document.addEventListener("keydown", handleKey);
+    </script>
+
+</body>
+</html>
