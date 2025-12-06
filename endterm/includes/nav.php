@@ -10,6 +10,7 @@
         <a href="/public/register.php">Register</a>
     <?php endif; ?>
     <a href="/public/admin.php">Admin</a>
+    <a href="/public/challenge/maze.php">Maze Challenge</a>
 </nav>
 
 

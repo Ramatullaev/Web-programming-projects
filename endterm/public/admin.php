@@ -81,7 +81,7 @@ include dirname(__DIR__) . '/includes/header.php';
               <span><?php echo h($e['category'] ?? ''); ?></span>
             </div>
             <div class="mt-3 flex space-between">
-              <a class="btn" href="/public/event_detail.php?id=<?php echo (int)$e['id']; ?>">View</a>
+              <a class="btn" href="/public/events.php?id=<?php echo (int)$e['id']; ?>">View</a>
               <a class="btn" href="/public/admin.php?action=delete&id=<?php echo (int)$e['id']; ?>" onclick="return confirm('Delete this event?');">Delete</a>
             </div>
           </div>

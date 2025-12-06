@@ -40,15 +40,33 @@ $registered_event_ids = array_column($user_registrations, 'event_id');
     <h2>My Marathons</h2>
     
     <?php if ($message): ?>
-        <div style="color: #22d3ee; background: #1f2937; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        <div id="success-message" style="color: #22d3ee; background: #1f2937; padding: 12px; border-radius: 8px; margin-bottom: 16px; display: none;">
             <?php echo h($message); ?>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Effect !== 'undefined') {
+                    new Effect.Appear('success-message', { duration: 0.5 });
+                } else {
+                    document.getElementById('success-message').style.display = 'block';
+                }
+            });
+        </script>
     <?php endif; ?>
     
     <?php if ($error): ?>
-        <div style="color: #ef4444; background: #1f2937; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        <div id="error-message" style="color: #ef4444; background: #1f2937; padding: 12px; border-radius: 8px; margin-bottom: 16px; display: none;">
             <?php echo h($error); ?>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Effect !== 'undefined') {
+                    new Effect.Appear('error-message', { duration: 0.5 });
+                } else {
+                    document.getElementById('error-message').style.display = 'block';
+                }
+            });
+        </script>
     <?php endif; ?>
     
     <!-- My Registered Marathons -->

@@ -43,6 +43,51 @@
     "distance": "42 км",
     "category": "Marathon",
     "image": "samarkand"
+  },
+  {
+    "id": 6,
+    "title": "New York Marathon",
+    "date": "2026-11-01",
+    "location": "New York, USA",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "new_york"
+  },
+  {
+    "id": 7,
+    "title": "Berlin Marathon",
+    "date": "2026-09-27",
+    "location": "Berlin, Germany",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "berlin"
+  },
+  {
+    "id": 8,
+    "title": "Chicago Marathon",
+    "date": "2026-10-11",
+    "location": "Chicago, USA",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "chicago"
+  },
+  {
+    "id": 9,
+    "title": "Beijing Marathon",
+    "date": "2026-10-19",
+    "location": "Beijing, China",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "beijing"
+  },
+  {
+    "id": 10,
+    "title": "Sydney Marathon",
+    "date": "2026-09-15",
+    "location": "Sydney, Australia",
+    "distance": "42 км",
+    "category": "Marathon",
+    "image": "sydney"
   }
 ]
 

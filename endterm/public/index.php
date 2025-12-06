@@ -13,7 +13,8 @@
 <section class="section">
     <div class="container">
         <h2 class="mt-2">Featured Events</h2>
-        <div class="grid mt-3">
+        <div id="dynamic-message-container" style="margin: 10px 0;"></div>
+        <div class="grid mt-3" id="featured-events">
             <?php foreach (array_slice(load_events(), 0, 3) as $e): ?>
                 <article class="card">
                     <img src="<?php echo h(strpos($e['image'], 'http') === 0 ? $e['image'] : get_city_marathon_photo($e['image'])); ?>" alt="<?php echo h($e['title']); ?>">
@@ -51,50 +52,149 @@
 
 <section class="section">
   <div class="container">
-    <h2>Next race in Turkistan in:</h2>
-    <div class="countdown mt-3" id="countdown">
-      <div class="counter"><div class="num" id="d">0</div><div class="label">Days</div></div>
-      <div class="counter"><div class="num" id="h">0</div><div class="label">Hours</div></div>
-      <div class="counter"><div class="num" id="m">0</div><div class="label">Minutes</div></div>
-      <div class="counter"><div class="num" id="s">0</div><div class="label">Seconds</div></div>
-    </div>
-    <p class="mt-2" style="opacity:0.8;">Date: October 26, 2025 — Turkistan Marathon</p>
+    <?php 
+    // Find the next upcoming race
+    $events = load_events();
+    $now = time();
+    $nextEvent = null;
+    $nextEventDate = null;
+    
+    foreach ($events as $event) {
+        $eventDate = strtotime($event['date']);
+        if ($eventDate > $now) {
+            if ($nextEventDate === null || $eventDate < $nextEventDate) {
+                $nextEventDate = $eventDate;
+                $nextEvent = $event;
+            }
+        }
+    }
+    ?>
+    
+    <?php if ($nextEvent): ?>
+      <h2>Next Race Starts In</h2>
+      <div class="countdown mt-3" id="countdown">
+        <div class="counter"><div class="num" id="d">0</div><div class="label">Days</div></div>
+        <div class="counter"><div class="num" id="h">0</div><div class="label">Hours</div></div>
+        <div class="counter"><div class="num" id="m">0</div><div class="label">Minutes</div></div>
+        <div class="counter"><div class="num" id="s">0</div><div class="label">Seconds</div></div>
+      </div>
+      <p class="mt-2" style="opacity:0.8;"><?php echo date('F j, Y', $nextEventDate); ?> — <?php echo h($nextEvent['title']); ?> in <?php echo h($nextEvent['location']); ?></p>
+      
+      <script>
+        (function(){
+          const targetDate = "<?php echo date('Y-m-d', $nextEventDate); ?>";
+          const targetTime = "07:00:00"; // Default start time (7 AM)
+          const target = new Date(targetDate + "T" + targetTime + "Z");
+
+          function tick(){
+            const now = new Date();
+            const diff = Math.max(0, target - now);
+
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+
+            document.getElementById('d').textContent = d;
+            document.getElementById('h').textContent = h;
+            document.getElementById('m').textContent = m;
+            document.getElementById('s').textContent = s;
+
+            if (diff <= 0) {
+              document.getElementById('countdown').innerHTML = "<h3>The race has started!</h3>";
+              clearInterval(interval);
+            }
+          }
+
+          tick();
+          const interval = setInterval(tick, 1000);
+        })();
+      </script>
+    <?php else: ?>
+      <h2>Next Race</h2>
+      <p>No upcoming races scheduled.</p>
+    <?php endif; ?>
   </div>
 
   <script>
-    (function(){
-      const target = new Date("2025-10-26T06:00:00");
-
-      function tick(){
-        const now = new Date();
-        const diff = Math.max(0, target - now);
-
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-
-        document.getElementById('d').textContent = d;
-        document.getElementById('h').textContent = h;
-        document.getElementById('m').textContent = m;
-        document.getElementById('s').textContent = s;
-
-        if (diff <= 0) {
-          document.getElementById('countdown').innerHTML = "<h3>The Turkistan race has started!</h3>";
-          clearInterval(interval);
-        }
+    // Parallax effect (moved outside to avoid conflicts)
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY * 0.3; 
+      const el = document.querySelector('#hero .parallax'); 
+      if (el) el.style.transform = 'translateY(' + (y * -1) + 'px)';
+    });
+    
+    // Dynamic DOM manipulation on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('dynamic-message-container');
+      const eventsGrid = document.getElementById('featured-events');
+      const cards = document.querySelectorAll('.card');
+      
+      // 1. Create a welcome message dynamically with Scriptaculous effect
+      const welcomeMsg = createElement('div', 'message message-success');
+      welcomeMsg.id = 'welcome-msg';
+      welcomeMsg.textContent = '🎉 Welcome! Explore our featured marathons below.';
+      welcomeMsg.style.marginBottom = '16px';
+      welcomeMsg.style.display = 'none';
+      container.appendChild(welcomeMsg);
+      
+      // Use Scriptaculous if available, otherwise fallback
+      if (typeof Effect !== 'undefined') {
+        new Effect.Appear('welcome-msg', { duration: 0.8 });
+      } else {
+        fadeIn(welcomeMsg);
       }
-
-      tick();
-      const interval = setInterval(tick, 1000);
-
-
-      window.addEventListener('scroll', ()=>{
-        const y = window.scrollY * 0.3; 
-        const el = document.querySelector('#hero .parallax'); 
-        if (el) el.style.transform = 'translateY(' + (y * -1) + 'px)';
+      
+      // 2. Dynamically add pulsate effect to CTA button using Scriptaculous
+      const ctaButton = document.querySelector('.cta');
+      if (ctaButton) {
+        setTimeout(() => {
+          if (typeof Effect !== 'undefined') {
+            new Effect.Pulsate(ctaButton, { duration: 2.0, pulses: 3 });
+          } else {
+            pulsate(ctaButton, 2000, 2);
+          }
+        }, 1000);
+      }
+      
+      // 3. Animate cards with Scriptaculous appear effect
+      cards.forEach((card, index) => {
+        if (!card.id) card.id = 'card-' + index;
+        card.style.display = 'none';
+        setTimeout(() => {
+          if (typeof Effect !== 'undefined') {
+            new Effect.Appear(card.id, { duration: 0.5, delay: index * 0.1 });
+          } else {
+            card.style.display = '';
+            appear(card);
+          }
+        }, index * 200);
       });
-    })();
+      
+      // 4. Dynamically modify card styles on hover (already in events.js but adding here too)
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          setStyle(card, {
+            transform: 'translateY(-5px) scale(1.02)',
+            boxShadow: '0 15px 40px rgba(96,165,250,0.4)'
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          setStyle(card, {
+            transform: '',
+            boxShadow: ''
+          });
+        });
+      });
+      
+      // 5. Remove welcome message after 5 seconds with fade out
+      setTimeout(() => {
+        if (welcomeMsg.parentNode) {
+          removeElement(welcomeMsg);
+        }
+      }, 5000);
+    });
   </script>
 </section>
 

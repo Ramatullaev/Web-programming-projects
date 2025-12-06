@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo h($pageTitle ?? 'Eventify'); ?></title>
     <link rel="stylesheet" href="<?php echo '/assets/css/style.css'; ?>">
+    <!-- Prototype.js and Scriptaculous.js for effects -->
+    <script src="https://cdn.jsdelivr.net/npm/prototype@1.7.3/dist/prototype.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scriptaculous@1.9.0/lib/scriptaculous.js"></script>
+    <script src="/assets/js/ui.js"></script>
+    <script src="/assets/js/data.js"></script>
+    <script src="/assets/js/events.js"></script>
 </head>
 <body>
 <header class="site-header">

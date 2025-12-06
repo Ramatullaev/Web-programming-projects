@@ -1,7 +1,5 @@
 <?php
-// Core helpers for DB + JSON fallback and business logic.
-
-require_once dirname(__DIR__) . '/db/config.php';
+// Core helpers for JSON-based data storage
 
 function data_path($relative)
 {
@@ -25,93 +23,62 @@ function save_json($filename, $data)
     file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }
 
-// Events (DB first, JSON fallback)
+// Events (JSON-only)
 function load_events()
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->query('SELECT * FROM events ORDER BY date ASC');
-        return $stmt->fetchAll();
-    } catch (Throwable $e) {
-        return load_json('events.json');
-    }
+    $events = load_json('events.json');
+    // Sort by date
+    usort($events, function($a, $b) {
+        return strcmp($a['date'] ?? '', $b['date'] ?? '');
+    });
+    return $events;
 }
 
 function get_event_by_id($id)
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->prepare('SELECT * FROM events WHERE id = ?');
-        $stmt->execute([(int)$id]);
-        $row = $stmt->fetch();
-        return $row ?: null;
-    } catch (Throwable $e) {
-        $events = load_json('events.json');
-        foreach ($events as $event) {
-            if ((int)$event['id'] === (int)$id) return $event;
+    $events = load_json('events.json');
+    foreach ($events as $event) {
+        if ((int)$event['id'] === (int)$id) {
+            return $event;
         }
-        return null;
     }
+    return null;
 }
 
 function add_event($event)
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->prepare('INSERT INTO events (title, date, location, distance, category, image) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([
-            $event['title'], $event['date'], $event['location'], $event['distance'], $event['category'] ?? null, $event['image'] ?? null
-        ]);
-        return (int)$pdo->lastInsertId();
-    } catch (Throwable $e) {
-        $events = load_json('events.json');
-        $max = 0; foreach ($events as $e2) { $max = max($max, (int)$e2['id']); }
-        $event['id'] = $max + 1;
-        $events[] = $event;
-        save_json('events.json', $events);
-        return $event['id'];
+    $events = load_json('events.json');
+    $max = 0;
+    foreach ($events as $e) {
+        $max = max($max, (int)$e['id']);
     }
+    $event['id'] = $max + 1;
+    $events[] = $event;
+    save_json('events.json', $events);
+    return $event['id'];
 }
 
 function delete_event($id)
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->prepare('DELETE FROM events WHERE id = ?');
-        $stmt->execute([(int)$id]);
-    } catch (Throwable $e) {
-        $events = load_json('events.json');
-        $filtered = array_values(array_filter($events, function ($e2) use ($id) { return (int)$e2['id'] !== (int)$id; }));
-        save_json('events.json', $filtered);
-    }
+    $events = load_json('events.json');
+    $filtered = array_values(array_filter($events, function ($e) use ($id) {
+        return (int)$e['id'] !== (int)$id;
+    }));
+    save_json('events.json', $filtered);
 }
 
-// Registrations
+// Registrations (JSON-only)
 function load_registrations()
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->query('SELECT * FROM registrations ORDER BY created_at DESC');
-        return $stmt->fetchAll();
-    } catch (Throwable $e) {
-        return load_json('registrations.json');
-    }
+    return load_json('registrations.json');
 }
 
 function add_registration($registration)
 {
-    try {
-        $pdo = get_pdo();
-        $stmt = $pdo->prepare('INSERT INTO registrations (event_id, name, email, phone, distance) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([
-            (int)$registration['event_id'], $registration['name'], $registration['email'], $registration['phone'], $registration['distance']
-        ]);
-    } catch (Throwable $e) {
-        $registrations = load_json('registrations.json');
-        $registration['date'] = date('Y-m-d H:i:s');
-        $registrations[] = $registration;
-        save_json('registrations.json', $registrations);
-    }
+    $registrations = load_json('registrations.json');
+    $registration['date'] = date('Y-m-d H:i:s');
+    $registrations[] = $registration;
+    save_json('registrations.json', $registrations);
 }
 
 function h($value)
@@ -173,7 +140,7 @@ function list_sponsor_logos($maxCount = 20)
 function get_city_marathon_photo($city)
 {
     $city = strtolower($city);
-    $extensions = ['jpg','jpeg','png','webp','svg'];
+    $extensions = ['jpg','jpeg','png','webp','svg','avif'];
     $dir = photos_path();
     
     if (!is_dir($dir)) return 'https://images.unsplash.com/photo-1544915319-6ae69f0940f6?q=80&w=600&auto=format&fit=crop';
