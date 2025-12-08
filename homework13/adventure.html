@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adventure Recommender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Find Your Next Adventure</h1>
+        <p class="subtitle">Choose your preferences and explore new experiences</p>
+
+        <form action="#" class="adventure-form">
+
+            <h2>1. Vacation Type</h2>
+            <label for="vacation">Choose your adventure type:</label>
+            <select id="vacation" name="vacation">
+                <option value="sea">Sea</option>
+                <option value="mountain">Mountain</option>
+                <option value="city">City</option>
+                <option value="desert">Desert</option>
+            </select>
+
+            <h2>2. Activity Level</h2>
+            <div class="radio-group">
+                <label><input type="radio" name="activity" value="low"> Low</label>
+                <label><input type="radio" name="activity" value="medium"> Medium</label>
+                <label><input type="radio" name="activity" value="high"> High</label>
+            </div>
+
+            <h2>3. Preferences</h2>
+            <label class="checkbox">
+                <input type="checkbox" name="family"> Family friendly
+            </label>
+
+            <h2>4. Budget</h2>
+            <label for="budget">Enter your budget (USD):</label>
+            <input type="text" id="budget" name="budget" placeholder="e.g. 1000">
+
+            <button type="submit" class="submit-btn">Get recommendations</button>
+
+        </form>
+
+        <footer>
+            <p>Adventure Recommender · Student Project</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
